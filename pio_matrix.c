@@ -113,11 +113,10 @@ int main() {
   gpio_set_irq_enabled_with_callback(BOTAO_A, GPIO_IRQ_EDGE_FALL, 1, &gpio_irq_handler);
   gpio_set_irq_enabled_with_callback(BOTAO_B, GPIO_IRQ_EDGE_FALL, 1, &gpio_irq_handler);
   //Escolha a cor
-  r = 0;
-  g = 1.0;
+  r = 1;
+  g = 0;
   b = 0;
   //Looping
-  
   while (true)
   {
     pisca_led();
@@ -168,13 +167,13 @@ static void gpio_irq_handler(uint gpio, uint32_t events){
     if (tempo_interrup - ultima_interrup > DEBOUNCE_DELAY) { // Verifica o tempo de debounce
         ultima_interrup = tempo_interrup; // Atualiza o tempo da última interrupção
         
-      if (gpio_get(BOTAO_A)){
+      if (gpio_get(BOTAO_A)==0){ //Incremento
           numero+=1;
             if (numero>9){
                 numero=0;
             }
       }
-      else if (gpio_get(BOTAO_B)){
+      else if (gpio_get(BOTAO_B)==0){ //Decremento
                numero-=1;
             if (numero<0){
                 numero=9;
